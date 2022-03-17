@@ -11,11 +11,24 @@ class DetailScreen extends StatefulWidget {
 }
 
 class _DetailScreenState extends State<DetailScreen> {
+  bool isFavorite = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("${widget.hotel.name}"),
+        actions: [
+          IconButton(
+            onPressed: () {
+              setState(() {
+                isFavorite = !isFavorite;
+              });
+            },
+            icon: (isFavorite)
+                ? Icon(Icons.favorite)
+                : Icon(Icons.favorite_border),
+          ),
+        ],
       ),
       body: Row(
 

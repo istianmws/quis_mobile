@@ -13,10 +13,13 @@ class ScreenList extends StatelessWidget {
         title: const Text("List Hotel"),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(5),
+        padding: const EdgeInsets.all(1),
         child: ListView.builder(
           itemBuilder: (context, index) {
             final DataHotel hotel = hotelList[index];
+            String rating = hotel.stars;
+            var myStar = int.parse(rating);
+            assert(myStar is int);
             return Card(
               child: InkWell(
                 onTap: (){
@@ -27,24 +30,72 @@ class ScreenList extends StatelessWidget {
                       })
                   );
                 },
-                child: Card(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Image.network(hotel.imageUrl[0], width: 120,),
-                      Text(hotel.name)
-                    ],
-                  ),
+                child: Stack(
+                  children: <Widget>[
+                    Container(
+                      height: 180,
+                      width: double.infinity,
+                        child: Image.network(
+                          hotel.imageUrl[0],
+                          fit: BoxFit.cover,
+                          color: const Color.fromRGBO(0, 0, 0, 0.5),
+                          colorBlendMode: BlendMode.darken
+                        ),
+                      ),
+                    Container(
+                      padding: EdgeInsets.all(5),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            hotel.name,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 24,
+                            ),
+                          ),
+                          Row(
+                            children:[
+                              for (var i=0; i<myStar; i++)
+                                const IconStar(),
+                            ],
+                          ),
+                          // Text(hotel.stars),
+                          Text(
+                              hotel.roomPrice,
+                              style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 24,
+                            ),
+                          )
+                        ],
+                      )
+                    ),
+                  ],
                 ),
               )
-
-
-
             );
           },
           itemCount: 10,
         ),
       ),
+    );
+  }
+}
+
+class IconStar extends StatefulWidget {
+  const IconStar({Key? key}) : super(key: key);
+
+  @override
+  _IconStarState createState() => _IconStarState();
+}
+
+class _IconStarState extends State<IconStar> {
+  @override
+  Widget build(BuildContext context) {
+    return const Icon(
+      Icons.star,
+      color: Colors.white,
     );
   }
 }
