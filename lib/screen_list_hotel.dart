@@ -17,9 +17,10 @@ class ScreenList extends StatelessWidget {
         child: ListView.builder(
           itemBuilder: (context, index) {
             final DataHotel hotel = hotelList[index];
-            String rating = hotel.stars;
-            var myStar = int.parse(rating);
-            assert(myStar is int);
+            ///ubah bintang menjadi angka untuk dimasukkan dalam logika for
+              String rating = hotel.stars;
+              var myStar = int.parse(rating);
+              assert(myStar is int);
             return Card(
               child: InkWell(
                 onTap: (){
